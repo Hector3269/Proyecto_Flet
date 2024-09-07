@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8a746afb-755f-449e-97bf-2c9a42fe2956" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/pag/Pag_Factura.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pag/conec_db/contact_inventario.py" beforeDir="false" afterPath="$PROJECT_DIR$/pag/conec_db/contact_inventario.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pag/db/data.db" beforeDir="false" afterPath="$PROJECT_DIR$/pag/db/data.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pag/pag_inventario.py" beforeDir="false" afterPath="$PROJECT_DIR$/pag/pag_inventario.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,6 +75,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Python.Pag_Factura.executor&quot;: &quot;Run&quot;,
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
     &quot;Python.pag_inicio.executor&quot;: &quot;Run&quot;,
     &quot;Python.pag_inventario._empleado.executor&quot;: &quot;Run&quot;,
@@ -86,6 +88,7 @@
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\50259\Desktop\pythonProject\pag" />
+      <recent name="C:\Users\50259\Desktop\pythonProject\Pag_Factura" />
     </key>
   </component>
   <component name="RunManager">
