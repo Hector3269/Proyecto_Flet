@@ -2,13 +2,20 @@ import flet as ft
 from conec_db.contact_inventario import Contact_Inventario
 from fpdf import FPDF
 import pandas as pd
+import openpyxl
+from openpyxl.styles import Font, PatternFill, Border, Side, Alignment
 import datetime
+import os
+
 
 
 class PDF(FPDF):
     def header(self):
-        self.set_font('Arial', 'B', 12)
-        self.cell(0, 10, 'Tabla de Datos', 0, 1, 'C')
+        self.set_font('Arial', 'B', 14)
+        self.set_fill_color(100, 100, 255)  # Fondo azul para el título
+        self.set_text_color(255, 255, 255)  # Texto blanco para el título
+        self.cell(0, 10, 'Tabla de Datos', border=0, ln=1, align='C', fill=True)
+        self.ln(10)  # Espacio después del título
 
     def footer(self):
         self.set_y(-15)
@@ -354,25 +361,104 @@ class Pag_Inventario(ft.UserControl):
     def save_pdf(self, e):
         pdf = PDF()
         pdf.add_page()
-        column_widths = [10, 40, 20, 80, 40]
-        # Agregar filas a la tabla
+
+        # Personalización de la tabla
+        column_widths = [15, 50, 30, 30, 30, 30]
         data = self.data.get_contact()
+
+        # Encabezado de la tabla
         header = ("ID", "NOMBRE", "PRECIO", "COSTO", "EXISTENCIA", "DESCRIPCION")
         data.insert(0, header)
-        for row in data:
+
+        # Colores para el encabezado
+        pdf.set_fill_color(100, 100, 255)
+        pdf.set_text_color(255, 255, 255)
+        pdf.set_font('Arial', 'B', 10)
+
+        for item, width in zip(header, column_widths):
+            pdf.cell(width, 10, item, border=1, align='C', fill=True)
+        pdf.ln()
+
+        # Filas de la tabla
+        pdf.set_text_color(0, 0, 0)
+        pdf.set_font('Arial', '', 10)
+
+        fill = False
+        for row in data[1:]:
+            fill_color = (230, 240, 255) if fill else (255, 255, 255)
+            pdf.set_fill_color(*fill_color)
             for item, width in zip(row, column_widths):
-                pdf.cell(width, 10, str(item), border=1)
+                pdf.cell(width, 10, str(item), border=1, align='C', fill=True)
             pdf.ln()
-        file_name = datetime.datetime.now()
-        file_name = file_name.strftime("DATA %Y-%m-%d_%H-%M-%S") + ".pdf"
+            fill = not fill
+
+        # Guardar el archivo PDF
+        file_name = self.get_file_name("pdf")
         pdf.output(file_name)
 
+        # Abrir el PDF automáticamente
+        self.open_file(file_name)
+
     def save_excel(self, e):
-        file_name = datetime.datetime.now()
-        file_name = file_name.strftime("DATA %Y-%m-%d_%H-%M-%S") + ".xlsx"
-        contacts = self.data.get_contact()
-        df = pd.DataFrame(contacts, columns=["ID", "NOMBRE", "PRECIO", "COSTO", "EXISTENCIA", "DESCRIPCION"])
-        df.to_excel(file_name, index=False)
+        wb = openpyxl.Workbook()
+        ws = wb.active
+        ws.title = "Datos"
+
+        header_font = Font(bold=True, color="FFFFFF")
+        header_fill = PatternFill(start_color="4F81BD", end_color="4F81BD", fill_type="solid")
+        cell_fill = PatternFill(start_color="DCE6F1", end_color="DCE6F1", fill_type="solid")
+        border = Border(left=Side(style='thin'), right=Side(style='thin'), top=Side(style='thin'),
+                        bottom=Side(style='thin'))
+
+        headers = ["ID", "NOMBRE", "PRECIO", "COSTO", "EXISTENCIA", "DESCRIPCION"]
+        ws.append(headers)
+
+        for col_num, header in enumerate(headers, 1):
+            cell = ws.cell(row=1, column=col_num)
+            cell.font = header_font
+            cell.fill = header_fill
+            cell.alignment = Alignment(horizontal="center")
+            cell.border = border
+
+        data = self.data.get_contact()
+
+        for row_num, row in enumerate(data, 2):
+            for col_num, value in enumerate(row, 1):
+                cell = ws.cell(row=row_num, column=col_num, value=value)
+                cell.fill = cell_fill if row_num % 2 == 0 else None
+                cell.border = border
+                cell.alignment = Alignment(horizontal="center")
+
+        for col in ws.columns:
+            max_length = max(len(str(cell.value)) for cell in col)
+            adjusted_width = max_length + 2
+            ws.column_dimensions[col[0].column_letter].width = adjusted_width
+
+        # Guardar el archivo Excel
+        file_name = self.get_file_name("xlsx")
+        wb.save(file_name)
+
+        # Abrir el archivo de Excel automáticamente
+        self.open_file(file_name)
+
+    def get_file_name(self, ext):
+        # Obtener la carpeta de documentos del usuario
+        documents_folder = os.path.join(os.path.expanduser("~"))
+
+        # Crear la carpeta si no existe
+        if not os.path.exists(documents_folder):
+            os.makedirs(documents_folder)
+
+        # Generar la ruta completa del archivo
+        file_name = os.path.join(documents_folder,
+                                 datetime.datetime.now().strftime("DATA_%Y-%m-%d_%H-%M-%S") + f".{ext}")
+        return file_name
+
+    def open_file(self, file_name):
+        if os.name == 'nt':  # Windows
+            os.startfile(file_name)
+        elif os.name == 'posix':  # Linux/Mac
+            os.system(f'open {file_name}')
 
     def build(self):
         return self.conent

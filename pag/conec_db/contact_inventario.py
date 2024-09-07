@@ -45,7 +45,7 @@ class Contact_Inventario(Singleton):
         self._ensure_connection()
         query = '''UPDATE Datos_Inventario SET NOMBRE = ?, PRECIO = ?, COSTO = ?, EXISTENCIA = ?, DESCRIPCION = ?,
                    WHERE ID = ?'''
-        self.connection.execute(query, (nombre,nombre, precio, costo, existencias, descripcion, contact_id))
+        self.connection.execute(query, (nombre, precio, costo, existencias, descripcion, contact_id))
         self.connection.commit()
         return self.connection.total_changes
 
