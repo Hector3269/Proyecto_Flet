@@ -2,7 +2,7 @@ import flet as ft
 from conec_db.contact_inventario_empleado import Contact_Inventario_Empleado
 import pandas as pd
 from fpdf import FPDF
-import openpyxl
+from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Border, Side, Alignment
 import datetime
 import os
@@ -397,7 +397,7 @@ class Pag_Inventario_Empleado(ft.UserControl):
 
     def save_excel(self, e):
         # Crear un nuevo archivo de Excel con openpyxl
-        wb = openpyxl.Workbook()
+        wb = Workbook()
         ws = wb.active
         ws.title = "Datos"
 
@@ -427,7 +427,7 @@ class Pag_Inventario_Empleado(ft.UserControl):
         for row_num, row in enumerate(data, 2):
             for col_num, value in enumerate(row, 1):
                 cell = ws.cell(row=row_num, column=col_num, value=value)
-                cell.fill = cell_fill if row_num % 2 == 0 else None  # Alternar color de fondo
+                cell.fill = cell_fill if row_num % 2 == 0 else PatternFill()  # Alternar color de fondo
                 cell.border = border
                 cell.alignment = Alignment(horizontal="center")
 

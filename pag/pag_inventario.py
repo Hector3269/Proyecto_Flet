@@ -1,8 +1,9 @@
 import flet as ft
 from conec_db.contact_inventario import Contact_Inventario
+import pandas as pd
 from fpdf import FPDF
-import openpyxl
-from openpyxl.styles import Font, PatternFill, Border, Side, Alignment
+from openpyxl import Workbook
+from openpyxl.styles import PatternFill, Font, Border, Side, Alignment
 import datetime
 import os
 
@@ -399,19 +400,23 @@ class Pag_Inventario(ft.UserControl):
         self.open_file(file_name)
 
     def save_excel(self, e):
-        wb = openpyxl.Workbook()
+        # Crear un nuevo archivo de Excel con openpyxl
+        wb = Workbook()
         ws = wb.active
         ws.title = "Datos"
 
+        # Personalización de estilos
         header_font = Font(bold=True, color="FFFFFF")
         header_fill = PatternFill(start_color="4F81BD", end_color="4F81BD", fill_type="solid")
         cell_fill = PatternFill(start_color="DCE6F1", end_color="DCE6F1", fill_type="solid")
         border = Border(left=Side(style='thin'), right=Side(style='thin'), top=Side(style='thin'),
                         bottom=Side(style='thin'))
 
+        # Encabezado de la tabla
         headers = ["ID", "NOMBRE", "PRECIO", "COSTO", "EXISTENCIA", "DESCRIPCION"]
         ws.append(headers)
 
+        # Aplicar estilos al encabezado
         for col_num, header in enumerate(headers, 1):
             cell = ws.cell(row=1, column=col_num)
             cell.font = header_font
@@ -419,15 +424,18 @@ class Pag_Inventario(ft.UserControl):
             cell.alignment = Alignment(horizontal="center")
             cell.border = border
 
+        # Obtener datos
         data = self.data.get_contact()
 
+        # Agregar filas de datos y aplicar estilos
         for row_num, row in enumerate(data, 2):
             for col_num, value in enumerate(row, 1):
                 cell = ws.cell(row=row_num, column=col_num, value=value)
-                cell.fill = cell_fill if row_num % 2 == 0 else None
+                cell.fill = cell_fill if row_num % 2 == 0 else PatternFill()  # Alternar color de fondo
                 cell.border = border
                 cell.alignment = Alignment(horizontal="center")
 
+        # Ajustar el ancho de las columnas
         for col in ws.columns:
             max_length = max(len(str(cell.value)) for cell in col)
             adjusted_width = max_length + 2
@@ -454,10 +462,11 @@ class Pag_Inventario(ft.UserControl):
         return file_name
 
     def open_file(self, file_name):
-        if os.name == 'nt':  # Windows
+        if os.name == 'nt':  # Si es Windows
             os.startfile(file_name)
-        elif os.name == 'posix':  # Linux/Mac
+        elif os.name == 'posix':  # Si es Linux/Mac
             os.system(f'open {file_name}')
+
 
     def build(self):
         return self.conent
