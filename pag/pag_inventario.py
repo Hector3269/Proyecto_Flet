@@ -1,7 +1,6 @@
 import flet as ft
 from conec_db.contact_inventario import Contact_Inventario
 from fpdf import FPDF
-import pandas as pd
 import openpyxl
 from openpyxl.styles import Font, PatternFill, Border, Side, Alignment
 import datetime

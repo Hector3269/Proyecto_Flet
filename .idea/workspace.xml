@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8a746afb-755f-449e-97bf-2c9a42fe2956" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/requirementos" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pag/conec_db/contact_inventario.py" beforeDir="false" afterPath="$PROJECT_DIR$/pag/conec_db/contact_inventario.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pag/db/data.db" beforeDir="false" afterPath="$PROJECT_DIR$/pag/db/data.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pag/db/pag_inicio.py" beforeDir="false" afterPath="$PROJECT_DIR$/pag/pag_inicio.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pag/pag_inventario._empleado.py" beforeDir="false" afterPath="$PROJECT_DIR$/pag/pag_inventario._empleado.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pag/pag_inventario.py" beforeDir="false" afterPath="$PROJECT_DIR$/pag/pag_inventario.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -86,6 +83,11 @@
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\50259\Desktop\pythonProject\pag" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="pythonProject" />
@@ -127,5 +129,16 @@
       <updated>1725582311081</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
